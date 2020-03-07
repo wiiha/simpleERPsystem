@@ -11,6 +11,16 @@ class Product(db.Model):
     def __repr__(self):
         return '<Product {} | {} | {}>'.format(self.id, self.product_nr, self.name)
 
+    @property
+    def serialize(self):
+        """Return object data in serializeable format"""
+        return {
+            'id': self.id,
+            'product_nr': self.product_nr,
+            'name': self.name,
+            'price': self.price
+        }
+
 
 class StockLocation(db.Model):
     stock_nr = db.Column(db.Integer, primary_key=True)
