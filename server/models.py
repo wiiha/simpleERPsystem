@@ -13,3 +13,6 @@ class Product(db.Model):
 class StockLocation(db.Model):
     stock_nr = db.Column(db.Integer, primary_key=True)
     city = db.Column(db.String(100), index=True, unique=True)
+
+    def __repr__(self):
+        return '<StockLocation {} | {}>'.format(self.stock_nr,self.city)
