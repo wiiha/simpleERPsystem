@@ -50,10 +50,25 @@ def get_product(product_id):
     return jsonify(product=p.serialize)
 
 
-@app.route(API_PREFIX + '/stocklocations', methods=['GET'])
+@app.route(API_PREFIX + '/stocklocations', methods=['GET', 'POST'])
 def get_all_stocklocations():
-    sls = StockLocation.query.all()
-    return jsonify(stocklocations=[sl.serialize for sl in sls])
+    if request.method == 'POST':
+        in_stocklocation = request.get_json()
+        try:
+            sl = StockLocation(city=in_stocklocation['city'])
+        except KeyError:
+            abort(500)
+
+        db.session.add(sl)
+        try:
+            db.session.commit()
+            return jsonify(sl.serialize)
+        except IntegrityError:
+            db.session.rollback() 
+            abort(500)
+    else:
+        sls = StockLocation.query.all()
+        return jsonify(stocklocations=[sl.serialize for sl in sls])
 
 
 @app.route(API_PREFIX + '/stocklocations/<int:stocklocation_id>', methods=['GET'])
