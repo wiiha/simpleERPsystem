@@ -7,6 +7,7 @@ class Product(db.Model):
     product_nr = db.Column(db.String(50), index=True, unique=True)
     name = db.Column(db.String(100), index=True)
     price = db.Column(db.Integer)
+    transactions = db.relationship('Transaction', backref='product', lazy='dynamic', foreign_keys = 'Transaction.product_id')
 
     def __repr__(self):
         return '<Product {} | {} | {}>'.format(self.id, self.product_nr, self.name)
@@ -25,6 +26,7 @@ class Product(db.Model):
 class StockLocation(db.Model):
     stock_nr = db.Column(db.Integer, primary_key=True)
     city = db.Column(db.String(100), index=True, unique=True)
+    transactions = db.relationship('Transaction', backref='stock_location', lazy='dynamic', foreign_keys = 'Transaction.stock_nr')
 
     def __repr__(self):
         return '<StockLocation {} | {}>'.format(self.stock_nr, self.city)
