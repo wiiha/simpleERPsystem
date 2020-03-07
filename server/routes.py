@@ -82,7 +82,16 @@ def all_transactions():
     if request.method == 'POST':
         in_transaction = request.get_json()
         try:
-            t = Transaction(product_id=in_transaction['product_id'], stock_nr=in_transaction['stock_nr'],
+            p = Product.query.get(in_transaction['product_id'])
+            sl = StockLocation.query.get(in_transaction['stock_nr'])
+        except KeyError:
+            abort(500)
+
+        if (p == None) or (sl == None):
+            return jsonify({'code': 422, 'text': 'missing data', 'valid': {'product_id': (p != None), 'stock_nr': (sl != None)}})
+
+        try:
+            t = Transaction(product=p, stock_location=sl,
                             quantity=in_transaction['quantity'], inbound=in_transaction['inbound'])
         except KeyError:
             abort(500)
