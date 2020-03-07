@@ -29,6 +29,14 @@ class StockLocation(db.Model):
     def __repr__(self):
         return '<StockLocation {} | {}>'.format(self.stock_nr, self.city)
 
+    @property
+    def serialize(self):
+        """Return object data in serializeable format"""
+        return {
+            'stock_nr': self.stock_nr,
+            'city': self.city
+        }
+
 
 class Transaction(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -40,3 +48,16 @@ class Transaction(db.Model):
 
     def __repr__(self):
         return '<Transaction {} | {} | {} | {}>'.format(self.quantity, self.inbound, self.product_id, self.timestamp)
+    
+    @property
+    def serialize(self):
+        """Return object data in serializeable format"""
+        return {
+            'id': self.id,
+            'quantity': self.quantity,
+            'timestamp': self.timestamp.timestamp(),
+            'date': self.timestamp.strftime("%Y-%m-%d"),
+            'stock_nr': self.stock_nr,
+            'product_id': self.product_id,
+            'inbound': self.inbound
+        }
