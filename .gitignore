@@ -1,5 +1,8 @@
+### BACKEND ###
 venv/
 .vscode/
 __pycache__/
 *.db
 test_*
+
+### WEB CLIENT ###
