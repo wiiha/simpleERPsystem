@@ -26,6 +26,7 @@ class Transaction(db.Model):
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     stock_nr = db.Column(db.Integer, db.ForeignKey('stock_location.stock_nr'))
     product_id = db.Column(db.Integer, db.ForeignKey('product.id'))
+    inbound = db.Column(db.Boolean, nullable=False)
 
     def __repr__(self):
-        return '<Transaction {} | {} | {} | {}>'.format(self.id, self.stock_nr, self.product_id, self.timestamp)
+        return '<Transaction {} | {} | {} | {}>'.format(self.quantity, self.stock_nr, self.product_id, self.timestamp)
