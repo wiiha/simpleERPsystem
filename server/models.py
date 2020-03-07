@@ -29,4 +29,4 @@ class Transaction(db.Model):
     inbound = db.Column(db.Boolean, default=True, nullable=False)
 
     def __repr__(self):
-        return '<Transaction {} | {} | {} | {}>'.format(self.quantity, self.stock_nr, self.product_id, self.timestamp)
+        return '<Transaction {} | {} | {} | {}>'.format(self.quantity, self.inbound, self.product_id, self.timestamp)
