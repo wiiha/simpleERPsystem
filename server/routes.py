@@ -23,7 +23,7 @@ def api_root():
 
 
 @app.route(API_PREFIX + '/products', methods=['GET', 'POST'])
-def get_all_products():
+def all_products():
     if request.method == 'POST':
         in_product = request.get_json()
         try:
@@ -37,7 +37,7 @@ def get_all_products():
             db.session.commit()
             return jsonify(p.serialize)
         except IntegrityError:
-            db.session.rollback() 
+            db.session.rollback()
             abort(500)
     else:
         ps = Product.query.all()
@@ -51,7 +51,7 @@ def get_product(product_id):
 
 
 @app.route(API_PREFIX + '/stocklocations', methods=['GET', 'POST'])
-def get_all_stocklocations():
+def all_stocklocations():
     if request.method == 'POST':
         in_stocklocation = request.get_json()
         try:
@@ -64,7 +64,7 @@ def get_all_stocklocations():
             db.session.commit()
             return jsonify(sl.serialize)
         except IntegrityError:
-            db.session.rollback() 
+            db.session.rollback()
             abort(500)
     else:
         sls = StockLocation.query.all()
@@ -77,10 +77,26 @@ def get_stocklocation(stocklocation_id):
     return jsonify(stocklocation=s.serialize)
 
 
-@app.route(API_PREFIX + '/transactions', methods=['GET'])
-def get_all_transactions():
-    ts = Transaction.query.all()
-    return jsonify(transactions=[t.serialize for t in ts])
+@app.route(API_PREFIX + '/transactions', methods=['GET', 'POST'])
+def all_transactions():
+    if request.method == 'POST':
+        in_transaction = request.get_json()
+        try:
+            t = Transaction(product_id=in_transaction['product_id'], stock_nr=in_transaction['stock_nr'],
+                            quantity=in_transaction['quantity'], inbound=in_transaction['inbound'])
+        except KeyError:
+            abort(500)
+
+        db.session.add(t)
+        try:
+            db.session.commit()
+            return jsonify(t.serialize)
+        except IntegrityError:
+            db.session.rollback()
+            abort(500)
+    else:
+        ts = Transaction.query.all()
+        return jsonify(transactions=[t.serialize for t in ts])
 
 
 @app.route(API_PREFIX + '/transactions/<int:transactions_id>', methods=['GET'])

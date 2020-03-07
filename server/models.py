@@ -42,8 +42,8 @@ class Transaction(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     quantity = db.Column(db.Integer)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-    stock_nr = db.Column(db.Integer, db.ForeignKey('stock_location.stock_nr'))
-    product_id = db.Column(db.Integer, db.ForeignKey('product.id'))
+    stock_nr = db.Column(db.Integer, db.ForeignKey('stock_location.stock_nr'), nullable = False)
+    product_id = db.Column(db.Integer, db.ForeignKey('product.id'), nullable = False)
     inbound = db.Column(db.Boolean, default=True, nullable=False)
 
     def __repr__(self):
