@@ -5,48 +5,58 @@
         <label class="label">Färdigvarulager</label>
         <div class="control">
           <div class="select">
-            <select>
+            <select #stockLocation>
               <option selected value="0">Välj lager</option>
               <option
-                *ngFor="let location of stockLocations$ |async"
+                *ngFor="let location of stockLocations$ | async"
                 value="{{ location.stockNumber }}"
                 >{{ location.city }}</option
               >
             </select>
           </div>
         </div>
+        <p *ngIf="error.stock" class="help is-danger">
+          Vänligen välj färdigvarulager.
+        </p>
       </div>
       <div class="field">
         <label class="label">Produkt</label>
         <div class="control">
           <div class="select">
-            <select>
+            <select #product>
               <option selected value="0">Välj produkt</option>
               <option
-                *ngFor="let product of products$ |async"
+                *ngFor="let product of products$ | async"
                 value="{{ product.id }}"
                 >{{ product.name }}</option
               >
             </select>
           </div>
         </div>
+        <p *ngIf="error.product" class="help is-danger">
+          Vänligen välj produkt.
+        </p>
       </div>
       <div class="field">
         <label class="label">Typ av leverans & kvantitet</label>
         <div class="control">
           <div class="select">
-            <select>
-              <option value="1" selected>inleverans</option>
+            <select #transactionType>
+              <option value="0" selected>Välj leveranstyp</option>
+              <option value="1">inleverans</option>
               <option value="-1">utleverans</option>
             </select>
           </div>
         </div>
+        <p *ngIf="error.transactionType" class="help is-danger">
+          Vänligen välj leveranstyp.
+        </p>
       </div>
       <!-- <label>Kvantitet</label> -->
       <div class="field has-addons">
         <!-- <label class="label">Kvantitet</label> -->
         <div class="control">
-          <input class="input" type="text" />
+          <input #quantity class="input" type="text" />
         </div>
         <div class="control">
           <a class="button is-success">
@@ -59,10 +69,25 @@
           </a>
         </div>
       </div>
+      <p *ngIf="error.quantity" class="help is-danger">
+        Vänligen fyll i kvantitet
+      </p>
       <br />
       <div class="field is-grouped is-grouped-centered">
         <div class="control">
-          <button class="button is-link">Registrera</button>
+          <button
+            (click)="
+              submitTransaction(
+                stockLocation.value,
+                product.value,
+                transactionType.value,
+                quantity.value
+              )
+            "
+            class="button is-link"
+          >
+            Registrera
+          </button>
         </div>
       </div>
     </div>

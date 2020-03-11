@@ -3,6 +3,7 @@ import { StockLocation } from "../models/StockLocation";
 import { Product } from "../models/Product";
 import { ProductStorageInfo } from "../models/ProductQuantityInfo";
 import { of, Observable } from "rxjs";
+import { Transaction } from "../models/transaction";
 
 @Injectable({
   providedIn: "root"
@@ -86,5 +87,9 @@ export class BackendService {
 
   getAllProductStorageInfo(): Observable<ProductStorageInfo[]> {
     return of(this.productStorageInfo);
+  }
+
+  sendTransaction(transaction: Transaction) {
+    console.log(transaction);
   }
 }
