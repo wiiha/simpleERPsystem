@@ -6,8 +6,8 @@
         <div class="control">
           <div class="select">
             <select>
-              <option selected>Välj lager</option>
-              <option *ngFor="let location of stockLocations">{{
+              <option selected value=0>Välj lager</option>
+              <option *ngFor="let location of stockLocations" value={{location.stockNumber}}>{{
                 location.city
               }}</option>
             </select>
@@ -19,8 +19,8 @@
         <div class="control">
           <div class="select">
             <select>
-              <option selected>inleverans</option>
-              <option>utleverans</option>
+              <option value=1 selected>inleverans</option>
+              <option value=-1>utleverans</option>
             </select>
           </div>
         </div>
