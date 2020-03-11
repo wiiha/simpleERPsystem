@@ -7,6 +7,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { StartMenuComponent } from './start-menu/start-menu.component';
 import { ModuleCardComponent } from './start-menu/module-card/module-card.component';
 import { TransactionModuleComponent } from './transaction-module/transaction-module.component';
+import { StockQuantityModuleComponent } from './stock-quantity-module/stock-quantity-module.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { TransactionModuleComponent } from './transaction-module/transaction-mod
     NavbarComponent,
     StartMenuComponent,
     ModuleCardComponent,
-    TransactionModuleComponent
+    TransactionModuleComponent,
+    StockQuantityModuleComponent
   ],
   imports: [
     BrowserModule,

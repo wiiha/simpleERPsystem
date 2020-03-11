@@ -1,0 +1,25 @@
+<!-- <p *ngFor="let item of ProductStorageInfo$ | async">{{ item.product.name }}</p> -->
+
+<div class="columns is-marginless">
+  <div class="column">
+    <div class="table-container">
+      <table class="table is-fullwidth">
+        <thead>
+          <tr>
+            <th>Produkt</th>
+            <th>Färdigvarulager</th>
+            <th>Lagersaldo</th>
+          </tr>
+        </thead>
+        <!-- <tbody *ngIf="ProductStorageInfo$ | async as ProductStorageInfo"> -->
+        <tbody>
+          <tr *ngFor="let row of rows$ | async">
+            <td>{{ row.product }}</td>
+            <td>{{ row.stockLocation }}</td>
+            <td>{{ row.quantity }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

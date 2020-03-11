@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { StockLocation } from "../models/StockLocation";
 import { Product } from "../models/Product";
+import { ProductStorageInfo } from "../models/ProductQuantityInfo";
 import { of, Observable } from "rxjs";
 
 @Injectable({
@@ -39,11 +40,40 @@ export class BackendService {
       name: "Päronklocka"
     }
   ];
+
+  productStorageInfo: ProductStorageInfo[] = [
+    {
+      product: this.products[0],
+      storageData: [
+        {
+          stockLocation: this.stockLocations[0],
+          quantity: 1003
+        },
+        {
+          stockLocation: this.stockLocations[1],
+          quantity: 700
+        }
+      ]
+    },
+    {
+      product: this.products[1],
+      storageData: [
+        {
+          stockLocation: this.stockLocations[2],
+          quantity: 106
+        },
+        {
+          stockLocation: this.stockLocations[0],
+          quantity: 894
+        }
+      ]
+    }
+  ];
+
   constructor() {}
 
-  test(){
+  test() {
     console.log("Running test!");
-    
   }
 
   getStockLocations(): Observable<StockLocation[]> {
@@ -52,5 +82,9 @@ export class BackendService {
 
   getProducts(): Observable<Product[]> {
     return of(this.products);
+  }
+
+  getAllProductStorageInfo(): Observable<ProductStorageInfo[]> {
+    return of(this.productStorageInfo);
   }
 }
