@@ -1,15 +1,8 @@
 import { Component, OnInit } from "@angular/core";
-
-interface stockLocation {
-  stockNumber: number;
-  city: string;
-}
-
-interface product {
-  id: number;
-  productNr: string;
-  name: string;
-}
+import { BackendService } from "../services/backend.service";
+import { StockLocation } from "../models/StockLocation";
+import { Observable } from "rxjs";
+import { Product } from "../models/Product";
 
 @Component({
   selector: "app-transaction-module",
@@ -17,40 +10,12 @@ interface product {
   styleUrls: ["./transaction-module.component.sass"]
 })
 export class TransactionModuleComponent implements OnInit {
-  stockLocations: stockLocation[] = [
-    {
-      stockNumber: 1,
-      city: "Norrköping"
-    },
-    {
-      stockNumber: 2,
-      city: "Frankfurt"
-    },
-    {
-      stockNumber: 3,
-      city: "Lund"
-    }
-  ];
+  stockLocations$: Observable<StockLocation[]>;
+  products$: Observable<Product[]>;
+  constructor(private backendService: BackendService) {}
 
-  products: product[] = [
-    {
-      id: 1,
-      productNr: "P001",
-      name: "jTelefon"
-    },
-    {
-      id: 2,
-      productNr: "P002",
-      name: "jPlatta"
-    },
-    {
-      id: 3,
-      productNr: "P003",
-      name: "Päronklocka"
-    },
-  ];
-
-  constructor() {}
-
-  ngOnInit() {}
+  ngOnInit() {
+    this.products$ = this.backendService.getProducts()
+    this.stockLocations$ = this.backendService.getStockLocations();
+  }
 }

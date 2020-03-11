@@ -8,7 +8,7 @@
             <select>
               <option selected value="0">Välj lager</option>
               <option
-                *ngFor="let location of stockLocations"
+                *ngFor="let location of stockLocations$ |async"
                 value="{{ location.stockNumber }}"
                 >{{ location.city }}</option
               >
@@ -23,7 +23,7 @@
             <select>
               <option selected value="0">Välj produkt</option>
               <option
-                *ngFor="let product of products"
+                *ngFor="let product of products$ |async"
                 value="{{ product.id }}"
                 >{{ product.name }}</option
               >
