@@ -1,10 +1,8 @@
-<div class="container">
-  <div class="columns is-marginless">
-    <app-module-card
-      *ngFor="let item of moduleItems"
-      class="column"
-      text="{{ item.text }}"
-      route="{{ item.route }}"
-    ></app-module-card>
-  </div>
+<div class="columns is-marginless">
+  <app-module-card
+    *ngFor="let item of moduleItems"
+    class="column"
+    text="{{ item.text }}"
+    route="{{ item.route }}"
+  ></app-module-card>
 </div>
