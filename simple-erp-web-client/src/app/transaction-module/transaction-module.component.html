@@ -19,7 +19,7 @@
               <option selected value="0">Välj lager</option>
               <option
                 *ngFor="let location of stockLocations$ | async"
-                value="{{ location.stockNumber }}"
+                value="{{ location.stock_nr }}"
                 >{{ location.city }}</option
               >
             </select>

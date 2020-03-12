@@ -2,24 +2,29 @@ import { Injectable } from "@angular/core";
 import { StockLocation } from "../models/StockLocation";
 import { Product } from "../models/Product";
 import { ProductStorageInfo } from "../models/ProductQuantityInfo";
-import { of, Observable } from "rxjs";
+import { of, Observable, throwError } from "rxjs";
 import { Transaction } from "../models/transaction";
+import { HttpClient, HttpErrorResponse } from "@angular/common/http";
+import { catchError, map, take } from "rxjs/operators";
+
+import { environment } from "../../environments/environment";
 
 @Injectable({
   providedIn: "root"
 })
 export class BackendService {
+  private API_URL = environment.API_URL;
   stockLocations: StockLocation[] = [
     {
-      stockNumber: 1,
+      stock_nr: 1,
       city: "Norrköping"
     },
     {
-      stockNumber: 2,
+      stock_nr: 2,
       city: "Frankfurt"
     },
     {
-      stockNumber: 3,
+      stock_nr: 3,
       city: "Lund"
     }
   ];
@@ -71,17 +76,29 @@ export class BackendService {
     }
   ];
 
-  constructor() {}
+  constructor(private http: HttpClient) {}
 
   test() {
     console.log("Running test!");
   }
 
   getStockLocations(): Observable<StockLocation[]> {
+    const api_route = this.API_URL + "/stocklocations";
+    return this.http.get<StockLocation[]>(api_route).pipe(
+      // tap(data => console.log("All: " + JSON.stringify(data))),
+      // take(1),
+      catchError(this.handleError)
+    );
     return of(this.stockLocations);
   }
 
   getProducts(): Observable<Product[]> {
+    const api_route = this.API_URL + "/products";
+    return this.http.get<Product[]>(api_route).pipe(
+      // tap(data => console.log("All: " + JSON.stringify(data))),
+      // take(1),
+      catchError(this.handleError)
+    );
     return of(this.products);
   }
 
@@ -94,6 +111,17 @@ export class BackendService {
     return {
       success: true,
       errorMsg: ""
+    };
+  }
+
+  private handleError(err: HttpErrorResponse) {
+    let errorMessage = "";
+    if (err.error instanceof ErrorEvent) {
+      errorMessage = `An error occurred: ${err.error.message}`;
+    } else {
+      errorMessage = `Server returned code: ${err.status}, error message is: ${err.message}`;
     }
+    console.error(errorMessage);
+    return throwError(errorMessage);
   }
 }

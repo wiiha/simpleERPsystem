@@ -31,3 +31,6 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 - Overview
 - Stock count view
 - Transaction view
+
+## Resources
+- https://vegibit.com/how-to-make-http-requests-in-angular-using-observables/

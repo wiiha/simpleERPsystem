@@ -41,7 +41,7 @@ def all_products():
             abort(500)
     else:
         ps = Product.query.all()
-        return setCORS(jsonify(products=[p.serialize for p in ps]))
+        return setCORS(jsonify([p.serialize for p in ps]))
 
 
 @app.route(API_PREFIX + '/products/<int:product_id>', methods=['GET'])
@@ -68,7 +68,7 @@ def all_stocklocations():
             abort(500)
     else:
         sls = StockLocation.query.all()
-        return setCORS(jsonify(stocklocations=[sl.serialize for sl in sls]))
+        return setCORS(jsonify([sl.serialize for sl in sls]))
 
 
 @app.route(API_PREFIX + '/stocklocations/<int:stocklocation_id>', methods=['GET'])

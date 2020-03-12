@@ -1,4 +1,4 @@
 export interface StockLocation {
-  stockNumber: number;
+  stock_nr: number;
   city: string;
 }
