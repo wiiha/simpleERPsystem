@@ -84,20 +84,23 @@ export class BackendService {
 
   getStockLocations(): Observable<StockLocation[]> {
     const api_route = this.API_URL + "/stocklocations";
-    return this.http.get<StockLocation[]>(api_route).pipe(
-      catchError(this.handleError)
-    );
-    return of(this.stockLocations);
+    return this.http
+      .get<StockLocation[]>(api_route)
+      .pipe(catchError(this.handleError));
   }
 
   getProducts(): Observable<Product[]> {
     const api_route = this.API_URL + "/products";
-    return this.http.get<Product[]>(api_route).pipe(
-      catchError(this.handleError)
-    );
+    return this.http
+      .get<Product[]>(api_route)
+      .pipe(catchError(this.handleError));
   }
 
   getAllProductStorageInfo(): Observable<ProductStorageInfo[]> {
+    const api_route = this.API_URL + "/allStorageInfo";
+    return this.http
+      .get<ProductStorageInfo[]>(api_route)
+      .pipe(catchError(this.handleError))
     return of(this.productStorageInfo);
   }
 
