@@ -50,6 +50,20 @@ def get_product(product_id):
     p = Product.query.get(product_id)
     return jsonify(product=p.serialize)
 
+@app.route(API_PREFIX + '/products/<int:product_id>/stocklocation/<int:stock_nr>', methods=['GET'])
+def get_product_count_at_location(product_id,stock_nr):
+    transactions = Transaction.query.filter(Transaction.stock_nr == stock_nr).filter(Transaction.product_id == product_id).all()
+    outdata = {}
+    outdata['product'] = Product.query.get(product_id).name
+    outdata['city'] = StockLocation.query.get(stock_nr).city
+    outdata['quantity'] = 0
+    for t in transactions:
+        if t.inbound:
+            outdata['quantity'] = outdata['quantity'] + t.quantity
+        else:
+            outdata['quantity'] = outdata['quantity'] - t.quantity
+    return jsonify(outdata)
+
 
 @app.route(API_PREFIX + '/allStorageInfo', methods=['GET'])
 def get_all_storage_info():
