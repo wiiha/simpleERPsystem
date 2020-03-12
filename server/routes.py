@@ -99,7 +99,7 @@ def all_transactions():
         db.session.add(t)
         try:
             db.session.commit()
-            return jsonify(t.serialize)
+            return jsonify({'code': 200, 'text': 'OK', 'content':t.serialize})
         except IntegrityError:
             db.session.rollback()
             abort(500)
