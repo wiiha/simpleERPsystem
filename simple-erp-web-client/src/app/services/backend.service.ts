@@ -5,7 +5,7 @@ import { ProductStorageInfo } from "../models/ProductQuantityInfo";
 import { of, Observable, throwError } from "rxjs";
 import { Transaction } from "../models/transaction";
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
-import { catchError, map, take } from "rxjs/operators";
+import { catchError } from "rxjs/operators";
 
 import { environment } from "../../environments/environment";
 
@@ -85,8 +85,6 @@ export class BackendService {
   getStockLocations(): Observable<StockLocation[]> {
     const api_route = this.API_URL + "/stocklocations";
     return this.http.get<StockLocation[]>(api_route).pipe(
-      // tap(data => console.log("All: " + JSON.stringify(data))),
-      // take(1),
       catchError(this.handleError)
     );
     return of(this.stockLocations);
@@ -95,11 +93,8 @@ export class BackendService {
   getProducts(): Observable<Product[]> {
     const api_route = this.API_URL + "/products";
     return this.http.get<Product[]>(api_route).pipe(
-      // tap(data => console.log("All: " + JSON.stringify(data))),
-      // take(1),
       catchError(this.handleError)
     );
-    return of(this.products);
   }
 
   getAllProductStorageInfo(): Observable<ProductStorageInfo[]> {
@@ -107,11 +102,17 @@ export class BackendService {
   }
 
   sendTransaction(transaction: Transaction) {
-    console.log(transaction);
-    return {
-      success: true,
-      errorMsg: ""
+    // console.log(transaction);
+    const api_route = this.API_URL + "/transactions";
+    const options = { headers: { "Content-Type": "application/json" } };
+    const data = {
+      product_id: Number(transaction.product),
+      stock_nr: Number(transaction.stockLocation),
+      quantity: Number(transaction.quantity),
+      inbound: Number(transaction.transactionType) === 1
     };
+    // console.log(data);
+    return this.http.post<any>(api_route, JSON.stringify(data), options);
   }
 
   private handleError(err: HttpErrorResponse) {

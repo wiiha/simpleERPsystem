@@ -1,15 +1,18 @@
 <div class="columns is-marginless">
-  <div *ngIf="transactionResponse" class="column">
+  <div *ngIf="transactionSuccess || transactionFail" class="column">
     <div class="box has-text-centered">
-      <div class="notification is-success">
+      <div *ngIf="transactionSuccess" class="notification is-success">
+        {{ transactionResponseMsg }}
+      </div>
+      <div *ngIf="transactionFail" class="notification is-danger">
         {{ transactionResponseMsg }}
       </div>
       <button class="button is-link" (click)="newTransaction()">
-        Registrera ny leverans
+        Registrera leverans
       </button>
     </div>
   </div>
-  <div *ngIf="!transactionResponse" class="column">
+  <div *ngIf="!(transactionSuccess || transactionFail)" class="column">
     <div class="box">
       <div class="field">
         <label class="label">Färdigvarulager</label>

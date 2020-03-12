@@ -13,7 +13,8 @@ import { Transaction } from "../models/transaction";
 export class TransactionModuleComponent implements OnInit {
   stockLocations$: Observable<StockLocation[]>;
   products$: Observable<Product[]>;
-  transactionResponse = false;
+  transactionSuccess = false;
+  transactionFail = false;
   transactionResponseMsg = "";
   error = {
     stock: false,
@@ -29,7 +30,8 @@ export class TransactionModuleComponent implements OnInit {
   }
 
   newTransaction() {
-    this.transactionResponse = false;
+    this.transactionSuccess = false;
+    this.transactionFail = false;
     this.transactionResponseMsg = "";
   }
 
@@ -43,12 +45,18 @@ export class TransactionModuleComponent implements OnInit {
       transactionType: transactionType,
       quantity: quantity
     };
-    const response = this.backendService.sendTransaction(transaction);
-    if (response.success) {
-      this.transactionResponse = true;
-      this.transactionResponseMsg =
-        (Number(transactionType) === 1 ? "In" : "Ut") + "leverans registrerad!";
-    }
+    const response$ = this.backendService.sendTransaction(transaction);
+    response$.subscribe(res => {
+      if (res.code === 200) {
+        this.transactionSuccess = true;
+        this.transactionResponseMsg =
+          (Number(transactionType) === 1 ? "In" : "Ut") +
+          "leverans registrerad!";
+      } else {
+        this.transactionFail = true;
+        this.transactionResponseMsg = "Något gick fel. Leveransen registrerades inte."
+      }
+    });
   }
 
   validation(stockLocation, product, transactionType, quantity) {
