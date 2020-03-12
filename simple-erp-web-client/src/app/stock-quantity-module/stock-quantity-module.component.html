@@ -16,7 +16,7 @@
           <tr *ngFor="let row of rows$ | async">
             <td>{{ row.product }}</td>
             <td>{{ row.stockLocation }}</td>
-            <td>{{ row.quantity }}</td>
+            <td>{{ row.quantity }} <span *ngIf="row.quantity < 0" class="tag is-danger">!!!</span> </td>
           </tr>
         </tbody>
       </table>
