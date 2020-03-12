@@ -7,7 +7,8 @@ class Product(db.Model):
     product_nr = db.Column(db.String(50), index=True, unique=True)
     name = db.Column(db.String(100), index=True)
     price = db.Column(db.Integer)
-    transactions = db.relationship('Transaction', backref='product', lazy='dynamic', foreign_keys = 'Transaction.product_id')
+    transactions = db.relationship(
+        'Transaction', backref='product', lazy='dynamic', foreign_keys='Transaction.product_id')
 
     def __repr__(self):
         return '<Product {} | {} | {}>'.format(self.id, self.product_nr, self.name)
@@ -22,11 +23,44 @@ class Product(db.Model):
             'price': self.price
         }
 
+    def storageData(self):
+        quantityAtStockLocations = {}
+        transactions = self.transactions.all()
+        for t in transactions:
+            city = StockLocation.query.get(t.stock_nr).city
+            try:
+                if t.inbound:
+                    quantityAtStockLocations[city] = quantityAtStockLocations[city] + t.quantity
+                else:
+                    quantityAtStockLocations[city] = quantityAtStockLocations[city] - t.quantity
+
+            except KeyError as e:
+                quantityAtStockLocations[city] = 0
+                if t.inbound:
+                    quantityAtStockLocations[city] = quantityAtStockLocations[city] + t.quantity
+                else:
+                    quantityAtStockLocations[city] = quantityAtStockLocations[city] - t.quantity
+
+        stockLocations = StockLocation.query.all()
+        outdata = []
+        for sl in stockLocations:
+            stockLocation = {}
+            stockLocation['stockLocation'] = sl.city
+            try:
+                stockLocation['quantity'] = quantityAtStockLocations[sl.city]
+                outdata.append(stockLocation)
+            except KeyError as e:
+                # print("Did not find any data for this location: " + sl.city)
+                pass
+
+        return outdata
+
 
 class StockLocation(db.Model):
     stock_nr = db.Column(db.Integer, primary_key=True)
     city = db.Column(db.String(100), index=True, unique=True)
-    transactions = db.relationship('Transaction', backref='stock_location', lazy='dynamic', foreign_keys = 'Transaction.stock_nr')
+    transactions = db.relationship(
+        'Transaction', backref='stock_location', lazy='dynamic', foreign_keys='Transaction.stock_nr')
 
     def __repr__(self):
         return '<StockLocation {} | {}>'.format(self.stock_nr, self.city)
@@ -44,13 +78,15 @@ class Transaction(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     quantity = db.Column(db.Integer)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-    stock_nr = db.Column(db.Integer, db.ForeignKey('stock_location.stock_nr'), nullable = False)
-    product_id = db.Column(db.Integer, db.ForeignKey('product.id'), nullable = False)
+    stock_nr = db.Column(db.Integer, db.ForeignKey(
+        'stock_location.stock_nr'), nullable=False)
+    product_id = db.Column(db.Integer, db.ForeignKey(
+        'product.id'), nullable=False)
     inbound = db.Column(db.Boolean, default=True, nullable=False)
 
     def __repr__(self):
         return '<Transaction {} | {} | {} | {}>'.format(self.quantity, self.inbound, self.product_id, self.timestamp)
-    
+
     @property
     def serialize(self):
         """Return object data in serializeable format"""
