@@ -4,12 +4,12 @@
       <!-- <img src="assets/logo.png" alt="SimpleERP logo" width="112" height="28"> -->
         <img src="assets/logo.png" alt="SimpleERP logo" />
     </a>
-    <!--   
-      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      
+      <a *ngIf="showBurger" [routerLink]="['/']" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
       </a>
-       -->
+      
   </div>
 </nav>

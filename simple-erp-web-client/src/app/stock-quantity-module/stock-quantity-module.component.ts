@@ -11,6 +11,7 @@ export class StockQuantityModuleComponent implements OnInit {
   // ProductStorageInfo$: Observable<ProductStorageInfo[]>;
   rows$: BehaviorSubject<any[]> = new BehaviorSubject(null);
   ProductStorageInfoSub: Subscription;
+  fetchingData = true
   constructor(private backendService: BackendService) {}
 
   ngOnInit() {
@@ -34,6 +35,7 @@ export class StockQuantityModuleComponent implements OnInit {
           });
           outdata.sort((a, b) => ("" + a.text).localeCompare(b.text));
           this.rows$.next(outdata);
+          this.fetchingData = false
         });
       });
   }

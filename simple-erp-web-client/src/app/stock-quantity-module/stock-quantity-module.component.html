@@ -16,10 +16,20 @@
           <tr *ngFor="let row of rows$ | async">
             <td>{{ row.product }}</td>
             <td>{{ row.stockLocation }}</td>
-            <td>{{ row.quantity }} <span *ngIf="row.quantity < 0" class="tag is-danger">!!!</span> </td>
+            <td>
+              {{ row.quantity }}
+              <span *ngIf="row.quantity < 0" class="tag is-danger">!!!</span>
+            </td>
           </tr>
         </tbody>
       </table>
     </div>
+  </div>
+</div>
+<div *ngIf="fetchingData" class="columns is-marginless">
+  <div class="column has-text-centered">
+    <span class="icon is-large">
+      <i class="fa fa-refresh fa-3x fa-pulse"></i>
+    </span>
   </div>
 </div>
