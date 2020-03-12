@@ -9,6 +9,8 @@ import { StartMenuComponent } from './start-menu/start-menu.component';
 import { ModuleCardComponent } from './start-menu/module-card/module-card.component';
 import { TransactionModuleComponent } from './transaction-module/transaction-module.component';
 import { StockQuantityModuleComponent } from './stock-quantity-module/stock-quantity-module.component';
+import { TransactionFormComponent } from './transaction-module/transaction-form/transaction-form.component';
+import { TransactionCurrentStatusComponent } from './transaction-module/transaction-current-status/transaction-current-status.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +19,9 @@ import { StockQuantityModuleComponent } from './stock-quantity-module/stock-quan
     StartMenuComponent,
     ModuleCardComponent,
     TransactionModuleComponent,
-    StockQuantityModuleComponent
+    StockQuantityModuleComponent,
+    TransactionFormComponent,
+    TransactionCurrentStatusComponent
   ],
   imports: [
     BrowserModule,
