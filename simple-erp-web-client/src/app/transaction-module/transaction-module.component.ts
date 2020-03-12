@@ -3,7 +3,7 @@ import { BackendService } from "../services/backend.service";
 import { StockLocation } from "../models/StockLocation";
 import { Observable } from "rxjs";
 import { Product } from "../models/Product";
-import { Transaction } from "../models/transaction";
+import { Transaction } from "../models/Transaction";
 
 @Component({
   selector: "app-transaction-module",

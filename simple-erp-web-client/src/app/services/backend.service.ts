@@ -3,7 +3,7 @@ import { StockLocation } from "../models/StockLocation";
 import { Product } from "../models/Product";
 import { ProductStorageInfo } from "../models/ProductQuantityInfo";
 import { of, Observable, throwError } from "rxjs";
-import { Transaction } from "../models/transaction";
+import { Transaction } from "../models/Transaction";
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { catchError } from "rxjs/operators";
 

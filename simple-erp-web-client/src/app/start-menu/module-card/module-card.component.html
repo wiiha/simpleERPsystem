@@ -1,3 +1,14 @@
-<div class="box has-text-centered">
-  <a [routerLink]="[route]">{{ text }}</a>
+<div [routerLink]="[route]" class="box has-text-centered">
+  <div class="columns">
+    <div class="column">
+      <span class="icon is-large">
+        <i class="{{'fa fa-3x ' + icon}}"></i>
+      </span>
+    </div>
+  </div>
+  <div class="columns">
+    <div class="column">
+      <a>{{ text }}</a>
+    </div>
+  </div>
 </div>

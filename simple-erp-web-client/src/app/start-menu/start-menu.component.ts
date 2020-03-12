@@ -3,6 +3,7 @@ import { Component, OnInit } from "@angular/core";
 interface moduleItem {
   text: string;
   route: string;
+  icon: string;
 }
 
 @Component({
@@ -14,15 +15,19 @@ export class StartMenuComponent implements OnInit {
   moduleItems: moduleItem[] = [
     {
       text: "Lagersaldon",
-      route: "stockQuantity"
+      route: "stockQuantity",
+      icon: "fa-table"
     },
     {
       text: "Registrera in-/ utleverans",
-      route: "transaction"
+      route: "transaction",
+      icon: "fa-truck"
+
     },
     {
       text: "Administrera system",
-      route: "erpAdmin"
+      route: "erpAdmin",
+      icon: "fa-cog"
     }
   ];
 

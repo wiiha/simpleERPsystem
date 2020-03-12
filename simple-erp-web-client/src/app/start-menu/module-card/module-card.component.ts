@@ -9,6 +9,7 @@ export class ModuleCardComponent implements OnInit {
 
   @Input() text: string;
   @Input() route: string;
+  @Input() icon: string;
 
   constructor() { }
 
