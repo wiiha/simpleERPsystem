@@ -14,6 +14,12 @@ export class TransactionModuleComponent implements OnInit {
   transactionSuccess = false;
   transactionFail = false;
   transactionResponseMsg = "";
+  currentSelectionStatus: {
+    city: string;
+    product: string;
+    quantity: number;
+  } = { city: "", product: "", quantity: 0 };
+  currentSelectionStatusIsSet = false;
   constructor(private backendService: BackendService) {}
 
   ngOnInit() {}
@@ -33,5 +39,20 @@ export class TransactionModuleComponent implements OnInit {
       this.transactionResponseMsg =
         "Något gick fel. Leveransen registrerades inte.";
     }
+  }
+
+  getCurrentStorageStatus($event) {
+    console.log($event);
+    this.backendService
+      .getCurrentStorageStatusForProducatAtLocation(
+        $event.stockLocation,
+        $event.product
+      )
+      .subscribe(res => {
+        this.currentSelectionStatus.city = res.city;
+        this.currentSelectionStatus.product = res.product;
+        this.currentSelectionStatus.quantity = res.quantity;
+        this.currentSelectionStatusIsSet = true;
+      });
   }
 }

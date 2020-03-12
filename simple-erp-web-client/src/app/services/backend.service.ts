@@ -21,6 +21,23 @@ export class BackendService {
     console.log("Running test!");
   }
 
+  getCurrentStorageStatusForProducatAtLocation(
+    stockLocation: number,
+    product: number
+  ) {
+    // console.log(stockLocation,product);
+    const api_route =
+      this.API_URL +
+      "/products/" +
+      product.toString() +
+      "/stocklocation/" +
+      stockLocation.toString();
+    console.log(api_route);
+    return this.http
+      .get<{ city: string; product: string; quantity: number }>(api_route)
+      .pipe(catchError(this.handleError));
+  }
+
   getStockLocations(): Observable<StockLocation[]> {
     const api_route = this.API_URL + "/stocklocations";
     return this.http
@@ -39,7 +56,7 @@ export class BackendService {
     const api_route = this.API_URL + "/allStorageInfo";
     return this.http
       .get<ProductStorageInfo[]>(api_route)
-      .pipe(catchError(this.handleError))
+      .pipe(catchError(this.handleError));
   }
 
   sendTransaction(transaction: Transaction) {

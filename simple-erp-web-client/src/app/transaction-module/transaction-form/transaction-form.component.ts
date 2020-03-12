@@ -12,6 +12,12 @@ import { Transaction } from "src/app/models/Transaction";
 })
 export class TransactionFormComponent implements OnInit {
   @Output() transactionSuccess = new EventEmitter<boolean>();
+
+  @Output() currentSelection = new EventEmitter<{
+    stockLocation: number;
+    product: number;
+  }>();
+
   stockLocations$: Observable<StockLocation[]>;
   products$: Observable<Product[]>;
   currentProduct: number = 0;
@@ -42,13 +48,19 @@ export class TransactionFormComponent implements OnInit {
   private getCurrentStorageStatus() {
     const product = this.currentProduct;
     const stockLocation = this.currentStockLocation;
-    console.log(product, stockLocation);
+    // console.log(product, stockLocation);
 
     if (product === 0 || stockLocation === 0) {
       return;
     }
-
-    console.log("Both values are set!");
+    this.currentSelection.emit({
+      stockLocation: stockLocation,
+      product: product
+    });
+    // this.backendService.getCurrentStorageStatusForProducatAtLocation(
+    //   stockLocation,
+    //   product
+    // );
   }
 
   submitTransaction(stockLocation, product, transactionType, quantity) {

@@ -1,4 +1,9 @@
 <div class="columns is-marginless">
+  <div *ngIf="!(transactionSuccess || transactionFail)" class="column">
+    <app-transaction-current-status *ngIf="currentSelectionStatusIsSet" [currentSelectionStatus]="currentSelectionStatus"></app-transaction-current-status>
+  </div>
+</div>
+<div class="columns is-marginless">
   <div *ngIf="transactionSuccess || transactionFail" class="column">
     <div class="box has-text-centered">
       <div *ngIf="transactionSuccess" class="notification is-success">
@@ -13,6 +18,6 @@
     </div>
   </div>
   <div *ngIf="!(transactionSuccess || transactionFail)" class="column">
-    <app-transaction-form (transactionSuccess)="transactionRespons($event)"></app-transaction-form>
+    <app-transaction-form (currentSelection)="getCurrentStorageStatus($event)" (transactionSuccess)="transactionRespons($event)"></app-transaction-form>
   </div>
 </div>
