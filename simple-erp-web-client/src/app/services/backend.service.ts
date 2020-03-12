@@ -91,5 +91,9 @@ export class BackendService {
 
   sendTransaction(transaction: Transaction) {
     console.log(transaction);
+    return {
+      success: true,
+      errorMsg: ""
+    }
   }
 }

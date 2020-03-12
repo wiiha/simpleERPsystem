@@ -1,5 +1,15 @@
 <div class="columns is-marginless">
-  <div class="column">
+  <div *ngIf="transactionResponse" class="column">
+    <div class="box has-text-centered">
+      <div class="notification is-success">
+        {{ transactionResponseMsg }}
+      </div>
+      <button class="button is-link" (click)="newTransaction()">
+        Registrera ny leverans
+      </button>
+    </div>
+  </div>
+  <div *ngIf="!transactionResponse" class="column">
     <div class="box">
       <div class="field">
         <label class="label">Färdigvarulager</label>
@@ -52,9 +62,7 @@
           Vänligen välj leveranstyp.
         </p>
       </div>
-      <!-- <label>Kvantitet</label> -->
       <div class="field has-addons">
-        <!-- <label class="label">Kvantitet</label> -->
         <div class="control">
           <input #quantity class="input" type="text" />
         </div>
@@ -70,7 +78,7 @@
         </div>
       </div>
       <p *ngIf="error.quantity" class="help is-danger">
-        Vänligen fyll i kvantitet
+        Vänligen fyll i en kvantitet som är större än 0.
       </p>
       <br />
       <div class="field is-grouped is-grouped-centered">

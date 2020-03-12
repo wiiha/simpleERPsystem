@@ -13,6 +13,8 @@ import { Transaction } from "../models/transaction";
 export class TransactionModuleComponent implements OnInit {
   stockLocations$: Observable<StockLocation[]>;
   products$: Observable<Product[]>;
+  transactionResponse = false;
+  transactionResponseMsg = "";
   error = {
     stock: false,
     product: false,
@@ -26,6 +28,11 @@ export class TransactionModuleComponent implements OnInit {
     this.stockLocations$ = this.backendService.getStockLocations();
   }
 
+  newTransaction() {
+    this.transactionResponse = false;
+    this.transactionResponseMsg = "";
+  }
+
   submitTransaction(stockLocation, product, transactionType, quantity) {
     if (this.validation(stockLocation, product, transactionType, quantity)) {
       return;
@@ -36,14 +43,24 @@ export class TransactionModuleComponent implements OnInit {
       transactionType: transactionType,
       quantity: quantity
     };
-    this.backendService.sendTransaction(transaction);
+    const response = this.backendService.sendTransaction(transaction);
+    if (response.success) {
+      this.transactionResponse = true;
+      this.transactionResponseMsg =
+        (Number(transactionType) === 1 ? "In" : "Ut") + "leverans registrerad!";
+    }
   }
 
   validation(stockLocation, product, transactionType, quantity) {
     this.error.stock = stockLocation === "0";
     this.error.product = product === "0";
     this.error.transactionType = transactionType === "0";
-    this.error.quantity = quantity === "";
+    this.error.quantity = isNaN(Number(quantity));
+
+    if (!this.error.quantity) {
+      this.error.quantity = Number(quantity) <= 0;
+    }
+
     for (const key in this.error) {
       if (this.error.hasOwnProperty(key)) {
         if (this.error[key]) {
