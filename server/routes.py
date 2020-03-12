@@ -17,7 +17,8 @@ def index():
 def api_root():
     routes = [API_PREFIX + '/products',
               API_PREFIX + '/stocklocations',
-              API_PREFIX + '/transactions'
+              API_PREFIX + '/transactions',
+              API_PREFIX + '/allStorageInfo'
               ]
     return render_template('apiRoot.html', routes=routes)
 
@@ -48,6 +49,18 @@ def all_products():
 def get_product(product_id):
     p = Product.query.get(product_id)
     return jsonify(product=p.serialize)
+
+
+@app.route(API_PREFIX + '/allStorageInfo', methods=['GET'])
+def get_all_storage_info():
+    products = Product.query.all()
+    outdata = []
+    for p in products:
+        current = {}
+        current['product'] = p.name
+        current['storageData'] = p.storageData()
+        outdata.append(current)
+    return jsonify(outdata)
 
 
 @app.route(API_PREFIX + '/stocklocations', methods=['GET', 'POST'])
