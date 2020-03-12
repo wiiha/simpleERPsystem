@@ -14,7 +14,7 @@ export class NavbarComponent implements OnInit {
   ngOnInit() {
     this.router.events.subscribe(event => {
       if(event instanceof NavigationEnd) {
-        console.log(event);
+        // console.log(event);
         if (event.urlAfterRedirects === '/') {
           this.showBurger = false
         }else{
