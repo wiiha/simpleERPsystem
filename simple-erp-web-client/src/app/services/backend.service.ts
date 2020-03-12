@@ -14,67 +14,6 @@ import { environment } from "../../environments/environment";
 })
 export class BackendService {
   private API_URL = environment.API_URL;
-  stockLocations: StockLocation[] = [
-    {
-      stock_nr: 1,
-      city: "Norrköping"
-    },
-    {
-      stock_nr: 2,
-      city: "Frankfurt"
-    },
-    {
-      stock_nr: 3,
-      city: "Lund"
-    }
-  ];
-
-  products: Product[] = [
-    {
-      id: 1,
-      productNr: "P001",
-      name: "jTelefon"
-    },
-    {
-      id: 2,
-      productNr: "P002",
-      name: "jPlatta"
-    },
-    {
-      id: 3,
-      productNr: "P003",
-      name: "Päronklocka"
-    }
-  ];
-
-  productStorageInfo: ProductStorageInfo[] = [
-    {
-      product: this.products[0],
-      storageData: [
-        {
-          stockLocation: this.stockLocations[0],
-          quantity: 1003
-        },
-        {
-          stockLocation: this.stockLocations[1],
-          quantity: 700
-        }
-      ]
-    },
-    {
-      product: this.products[1],
-      storageData: [
-        {
-          stockLocation: this.stockLocations[2],
-          quantity: 106
-        },
-        {
-          stockLocation: this.stockLocations[0],
-          quantity: 894
-        }
-      ]
-    }
-  ];
 
   constructor(private http: HttpClient) {}
 
@@ -101,7 +40,6 @@ export class BackendService {
     return this.http
       .get<ProductStorageInfo[]>(api_route)
       .pipe(catchError(this.handleError))
-    return of(this.productStorageInfo);
   }
 
   sendTransaction(transaction: Transaction) {
