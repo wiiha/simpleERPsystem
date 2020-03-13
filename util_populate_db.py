@@ -20,12 +20,12 @@ db.session.add(sl3)
 
 db.session.commit()
 
-t1 = Transaction(quantity=100000,stock_location=sl3,product=p1, inbound=True)
-t2 = Transaction(quantity=5000,stock_location=sl2,product=p3, inbound=False)
+t1 = Transaction(quantity=10000,stock_location=sl3,product=p1, inbound=True)
+t2 = Transaction(quantity=5000,stock_location=sl2,product=p3, inbound=True)
 t3 = Transaction(product=p1,stock_location=sl2,quantity=5000, inbound=True)
 t4 = Transaction(product=p2,stock_location=sl1,quantity=40000, inbound=True)
 t5 = Transaction(product=p2,stock_location=sl1,quantity=25000, inbound=False)
-t6 = Transaction(product=p1,stock_location=sl2,quantity=50000, inbound=False)
+t6 = Transaction(product=p1,stock_location=sl2,quantity=3000, inbound=False)
 t7 = Transaction(product=p3,stock_location=sl3,quantity=20000, inbound=True)
 t8 = Transaction(product=p1,stock_location=sl1,quantity=45000, inbound=True)
 
