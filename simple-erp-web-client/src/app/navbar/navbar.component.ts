@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { Router, NavigationEnd } from "@angular/router";
+import { environment } from "../../environments/environment";
 
 @Component({
   selector: "app-navbar",
@@ -8,10 +9,12 @@ import { Router, NavigationEnd } from "@angular/router";
 })
 export class NavbarComponent implements OnInit {
   showBurger: boolean = false;
+  production = false
 
   constructor(private router: Router) {}
 
   ngOnInit() {
+    this.production = environment.production
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         // console.log(event);
