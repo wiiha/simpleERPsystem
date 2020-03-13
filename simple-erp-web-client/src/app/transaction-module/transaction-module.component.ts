@@ -27,6 +27,7 @@ export class TransactionModuleComponent implements OnInit {
   newTransaction() {
     this.transactionSuccess = false;
     this.transactionFail = false;
+    this.currentSelectionStatusIsSet = false
     this.transactionResponseMsg = "";
   }
 
