@@ -132,7 +132,7 @@ def all_transactions():
             abort(500)
     else:
         ts = Transaction.query.all()
-        return jsonify(transactions=[t.serialize for t in ts])
+        return jsonify([t.serialize for t in ts])
 
 
 @app.route(API_PREFIX + '/transactions/<int:transactions_id>', methods=['GET'])

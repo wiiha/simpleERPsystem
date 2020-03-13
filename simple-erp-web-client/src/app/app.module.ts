@@ -11,6 +11,7 @@ import { TransactionModuleComponent } from './transaction-module/transaction-mod
 import { StockQuantityModuleComponent } from './stock-quantity-module/stock-quantity-module.component';
 import { TransactionFormComponent } from './transaction-module/transaction-form/transaction-form.component';
 import { TransactionCurrentStatusComponent } from './transaction-module/transaction-current-status/transaction-current-status.component';
+import { StatsModuleComponent } from './stats-module/stats-module.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { TransactionCurrentStatusComponent } from './transaction-module/transact
     TransactionModuleComponent,
     StockQuantityModuleComponent,
     TransactionFormComponent,
-    TransactionCurrentStatusComponent
+    TransactionCurrentStatusComponent,
+    StatsModuleComponent
   ],
   imports: [
     BrowserModule,

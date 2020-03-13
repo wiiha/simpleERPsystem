@@ -25,9 +25,9 @@ export class StartMenuComponent implements OnInit {
 
     },
     {
-      text: "Administrera system",
-      route: "erpAdmin",
-      icon: "fa-cog"
+      text: "Leveransstatistik",
+      route: "stats",
+      icon: "fa-line-chart"
     }
   ];
 
