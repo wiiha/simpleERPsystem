@@ -4,6 +4,7 @@ import { StockLocation } from "src/app/models/StockLocation";
 import { Product } from "src/app/models/Product";
 import { Observable } from "rxjs";
 import { Transaction } from "src/app/models/Transaction";
+import { ProductResponse } from 'src/app/models/ProductResponse';
 
 @Component({
   selector: "app-transaction-form",
@@ -19,7 +20,7 @@ export class TransactionFormComponent implements OnInit {
   }>();
 
   stockLocations$: Observable<StockLocation[]>;
-  products$: Observable<Product[]>;
+  products$: Observable<ProductResponse[]>;
   currentProduct: number = 0;
   currentStockLocation: number = 0;
   error = {

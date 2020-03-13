@@ -1,1 +1,48 @@
-<p>stats-module works!</p>
+<!-- <p *ngFor="let item of ProductStorageInfo$ | async">{{ item.product.name }}</p> -->
+
+<div class="columns is-marginless">
+  <div class="column">
+    <div class="table-container">
+      <table class="table is-fullwidth">
+        <thead>
+          <tr>
+            <th>Datum</th>
+            <th>Produkt</th>
+            <th>Till/från</th>
+            <th>Antal</th>
+            <th>Notering</th>
+          </tr>
+        </thead>
+        <!-- <tbody *ngIf="ProductStorageInfo$ | async as ProductStorageInfo"> -->
+        <tbody>
+          <tr *ngFor="let row of rows$ | async">
+            <td>{{ row.date }}</td>
+            <td>{{ row.product }}</td>
+            <td>{{ row.stockLocation }}</td>
+            <td>
+              {{ row.quantity }}
+              <span *ngIf="!row.inbound" class="tag is-danger">
+                <span class="icon has-text-white">
+                  <i class="fa fa-arrow-down"></i>
+                </span>
+              </span>
+              <span *ngIf="row.inbound" class="tag is-success">
+                <span class="icon has-text-white">
+                  <i class="fa fa-arrow-up"></i>
+                </span>
+              </span>
+            </td>
+            <td>{{ row.initialTransactionText }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<div *ngIf="fetchingData" class="columns is-marginless">
+  <div class="column has-text-centered">
+    <span class="icon is-large">
+      <i class="fa fa-refresh fa-3x fa-pulse"></i>
+    </span>
+  </div>
+</div>

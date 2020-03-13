@@ -8,6 +8,8 @@ import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { catchError } from "rxjs/operators";
 
 import { environment } from "../../environments/environment";
+import { TransactionResponse } from '../models/TransactionResponse';
+import { ProductResponse } from '../models/ProductResponse';
 
 @Injectable({
   providedIn: "root"
@@ -32,7 +34,7 @@ export class BackendService {
       product.toString() +
       "/stocklocation/" +
       stockLocation.toString();
-    console.log(api_route);
+    // console.log(api_route);
     return this.http
       .get<{ city: string; product: string; quantity: number }>(api_route)
       .pipe(catchError(this.handleError));
@@ -45,10 +47,17 @@ export class BackendService {
       .pipe(catchError(this.handleError));
   }
 
-  getProducts(): Observable<Product[]> {
+  getAllTransactions(): Observable<TransactionResponse[]> {
+    const api_route = this.API_URL + "/transactions";
+    return this.http
+      .get<TransactionResponse[]>(api_route)
+      .pipe(catchError(this.handleError));
+  }
+
+  getProducts(): Observable<ProductResponse[]> {
     const api_route = this.API_URL + "/products";
     return this.http
-      .get<Product[]>(api_route)
+      .get<ProductResponse[]>(api_route)
       .pipe(catchError(this.handleError));
   }
 
